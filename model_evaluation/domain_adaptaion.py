@@ -2,14 +2,9 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from PoetryGenerator import PoetryGenerator
 from typing import List
 from rhymetagger import RhymeTagger
+import argparse
 from tqdm import tqdm
 import sys
-
-CUDA_ID = sys.argv[1]
-MODEL_LOCATION = "/mnt/smolyakov/rutp5_update/checkpoint-20664/"
-MODEL_NAME = "sberbank-ai/ruT5-large"
-NEW_DATASET_LOCATION = f"/mnt/smolyakov/new_data_block_with_counter_{CUDA_ID}.txt"
-OLD_DATA = "/mnt/smolyakov/fontantka_headlines.txt"
 
 
 def get_rhyme_tagger() -> RhymeTagger:
@@ -18,14 +13,16 @@ def get_rhyme_tagger() -> RhymeTagger:
     return rt
 
 
-def get_rhyme_generator() -> PoetryGenerator:
-    model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_LOCATION).to(f"cuda:{CUDA_ID}")
+def get_rhyme_generator(args) -> PoetryGenerator:
+    model = AutoModelForSeq2SeqLM.from_pretrained(args.model_location).to(args.cuda_device)
     print("Load model")
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    print(args.model_name)
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name)
+    
     print("Load tokenizer")
     tokenizer.add_tokens("\n")
     rhyme_tagger = get_rhyme_tagger()
-    return PoetryGenerator(model, tokenizer, rhyme_tagger, "CUDA:0")
+    return PoetryGenerator(model, tokenizer, rhyme_tagger, args.cuda_device)
 
 
 def save_block(text:str, all_targets: List[str], file_location: str) -> None:
@@ -34,32 +31,42 @@ def save_block(text:str, all_targets: List[str], file_location: str) -> None:
             data_file.write(f"{text}\t{target}\t{index}\n")
 
 
-def get_data():
-    with open(OLD_DATA, 'r') as data_file:
-        data = data.readlines()
-    cuda_int = int(CUDA_ID)
-    return data[len(data)//4 * cuda_int: len(data) // 4 * (cuda_int + 1)]
+def get_data(args):
+    with open(args.data_location, 'r') as data_file:
+        data = data_file.readlines()
+    return data
 
 
-def get_phrases() -> List[str]:
-    with open(OLD_DATA, "r") as data_file:
+def get_phrases(args) -> List[str]:
+    with open(args.data_location, "r") as data_file:
         data = data_file.read().split("\n")
-        cuda_int = int(CUDA_ID)
-        return data[len(data)//4 * cuda_int: len(data) // 4 * (cuda_int + 1)]
+    return data
 
-def main():
-    all_phrases = get_phrases()
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--cuda_device", type=str, default='cpu')
+    parser.add_argument("--model_location", type=str, default="models/rutp5")
+    parser.add_argument("--model_name", type=str, default="sberbank-ai/ruT5-base")
+    parser.add_argument("--data_location", type=str, default="data/fontantka_headlines.txt")
+    parser.add_argument("--new_data_location", type=str, default="data/new_data.txt")
+    return parser.parse_args()
+
+
+def main(args):
+    all_phrases = get_phrases(args)
     print("Load phrases")
-    rhyme_generator = get_rhyme_generator()
+    rhyme_generator = get_rhyme_generator(args)
     print(rhyme_generator)
     print("Get Rhyme Generator")
     for phrase in tqdm(all_phrases):
         rhymes = rhyme_generator.generate_rhymes(phrase)
         if rhymes is not None:
-            save_block(phrase, rhymes, NEW_DATASET_LOCATION)
+            save_block(phrase, rhymes, args.new_data_location)
         else:
-            save_block(phrase, [(-1, "")], NEW_DATASET_LOCATION)
+            save_block(phrase, [(-1, "")], args.new_data_location)
 
 
 if __name__ == "__main__":
-    main()
+    args = parse_args()
+    main(args)

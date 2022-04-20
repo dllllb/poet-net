@@ -1,4 +1,5 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from rhymetagger import RhymeTagger
 from typing import List
 
 class PoetryGenerator:
