@@ -14,6 +14,7 @@ rhymetagger = "*"
 transformers = "*"
 datasets = "*"
 tqdm = "*"
+lxml = "*"
 
 [requires]
 python_version = "3.8"
