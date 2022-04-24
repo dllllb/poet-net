@@ -14,13 +14,10 @@ def get_rhyme_tagger() -> RhymeTagger:
 
 
 def get_rhyme_generator(args) -> PoetryGenerator:
-    model = AutoModelForSeq2SeqLM.from_pretrained(args.model_location).to(args.cuda_device)
+    model = AutoModelForSeq2SeqLM.from_pretrained(args.model_name).to(args.cuda_device)
     print("Load model")
-    print(args.model_name)
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)
-    
     print("Load tokenizer")
-    tokenizer.add_tokens("\n")
     rhyme_tagger = get_rhyme_tagger()
     return PoetryGenerator(model, tokenizer, rhyme_tagger, args.cuda_device)
 
@@ -46,8 +43,7 @@ def get_phrases(args) -> List[str]:
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cuda_device", type=str, default='cpu')
-    parser.add_argument("--model_location", type=str, default="models/rutp5")
-    parser.add_argument("--model_name", type=str, default="sberbank-ai/ruT5-base")
+    parser.add_argument("--model_name", type=str, default="dllllb/poetnet-rut5-stihiru-libru")
     parser.add_argument("--data_location", type=str, default="data/fontantka_headlines.txt")
     parser.add_argument("--new_data_location", type=str, default="data/new_data.txt")
     return parser.parse_args()
