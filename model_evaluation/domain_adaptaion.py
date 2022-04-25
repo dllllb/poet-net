@@ -4,7 +4,7 @@ from typing import List
 from rhymetagger import RhymeTagger
 import argparse
 from tqdm import tqdm
-import sys
+import os
 
 
 def get_rhyme_tagger() -> RhymeTagger:
@@ -50,6 +50,8 @@ def parse_args():
 
 
 def main(args):
+    os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
     all_phrases = get_phrases(args)
     print("Load phrases")
     rhyme_generator = get_rhyme_generator(args)
