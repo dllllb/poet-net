@@ -10,6 +10,8 @@
 
 The paired dataset of rhymed and not rhymed text is required to train a Seq2Seq model to transfrom plain text the poetry. We synthetically generate paired dataset from rhymed text dataset using machine translation. Machine translation allows to obtain plain text by tranlsating a poem to some foreign language and then back to the original language (back-translation). This approach will produce wo versions of the same text, the mangled automatiaclly translated plain version and the original poetic version.
 
+The text styling net outputs can be ranked using additional discriminator net, trained on the unpaired dataset of both rhymed and not rhymed texts. It is also possilbe to fine-tune text styling net by selecting highly ranked outputs and add them to the training set.
+
 The same approach can be used for any style transfer task where a substantial volume of styled text is available.
 
 ## Related papers
