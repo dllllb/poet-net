@@ -64,4 +64,6 @@ The same approach can be used for any style transfer task where a substantial vo
 
 ## Related papers
 
+Paraphrasing with Bilingual Parallel Corpora / Bannard & Callison-Burch / ACL 2005
+
 Russian Paraphrasers: Paraphrase with Transformers / Alena Fenogenova / BSNLP 2021
