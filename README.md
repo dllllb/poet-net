@@ -14,6 +14,8 @@ The text styling net outputs can be ranked using additional discriminator net, t
 
 The same approach can be used for any style transfer task where a substantial volume of styled text is available.
 
+The back-translation paraphrase generation approach is proposed in the Paraphrasing with Bilingual Parallel Corpora / Bannard & Callison-Burch / ACL 2005
+
 ## RUT5-1 output
 
 "Это не единственная погодная неприятность, которая нас ждет."
@@ -61,7 +63,3 @@ The same approach can be used for any style transfer task where a substantial vo
 111
 Он движим принципом всегда был: 
 Пришел, увидел, победил
-
-## Related papers
-
-The back-translation paraphrasing approach is proposed in the Paraphrasing with Bilingual Parallel Corpora / Bannard & Callison-Burch / ACL 2005
