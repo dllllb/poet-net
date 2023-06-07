@@ -16,7 +16,7 @@ The same approach can be used for any style transfer task where a substantial vo
 
 The back-translation paraphrase generation approach is proposed in the Paraphrasing with Bilingual Parallel Corpora / Bannard & Callison-Burch / ACL 2005
 
-## RUT5-1 output
+## RUT5-2 output
 
 "Это не единственная погодная неприятность, которая нас ждет."
 
