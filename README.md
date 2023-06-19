@@ -1,5 +1,7 @@
 # poet-net
 
+Back-translation paraphrase generation for poetic text styling
+
 ## Models
 
 - [MT5 model](https://huggingface.co/dllllb/poetnet-mt5-stihiru-libru), trained on [Taiga stihi.ru](https://storage.yandexcloud.net/poet-net/taiga-stihi-ru.zip) dataset and [Lib.ru poetry](https://storage.yandexcloud.net/poet-net/libru-poetry.zip) dataset
