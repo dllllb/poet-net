@@ -1672,7 +1672,7 @@ dependencies = [
     { name = "transformers" },
 ]
 
-[package.optional-dependencies]
+[package.dev-dependencies]
 dev = [
     { name = "jupyter" },
     { name = "pylint" },
@@ -1682,11 +1682,9 @@ dev = [
 requires-dist = [
     { name = "beautifulsoup4" },
     { name = "datasets" },
-    { name = "jupyter", marker = "extra == 'dev'" },
     { name = "lxml" },
     { name = "pandas" },
     { name = "protobuf" },
-    { name = "pylint", marker = "extra == 'dev'" },
     { name = "requests" },
     { name = "rhymetagger" },
     { name = "sentencepiece" },
@@ -1694,7 +1692,12 @@ requires-dist = [
     { name = "tqdm" },
     { name = "transformers", specifier = "<5" },
 ]
-provides-extras = ["dev"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "jupyter" },
+    { name = "pylint" },
+]
 
 [[package]]
 name = "prometheus-client"
