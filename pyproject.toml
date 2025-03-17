@@ -13,7 +13,7 @@ dependencies = [
     "datasets",
     "tqdm",
     "lxml",
-    "torch==1.11.0",
+    "torch>=1.11.0,<2",
     "sentencepiece",
     "protobuf",
 ]

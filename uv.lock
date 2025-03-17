@@ -1688,7 +1688,7 @@ requires-dist = [
     { name = "requests" },
     { name = "rhymetagger" },
     { name = "sentencepiece" },
-    { name = "torch", specifier = "==1.11.0" },
+    { name = "torch", specifier = ">=1.11.0,<2" },
     { name = "tqdm" },
     { name = "transformers", specifier = "<5" },
 ]
